@@ -64,7 +64,8 @@ export default {
     data() {
         return {
             styles: {},
-            classes: {}
+            classes: {},
+            focused: false
         };
     },
     computed: {
@@ -72,6 +73,7 @@ export default {
             return {
                 'mdc-select--box': !this.outlined,
                 'mdc-select--outlined': this.outlined,
+                'mdc-select--focused': this.focused,
                 'mdc-text-field--disabled': this.disabled,
                 ...this.classes
             };
@@ -79,7 +81,9 @@ export default {
         listeners() {
             return {
                 ...this.$listeners,
-                change: event => this.onChange(event)
+                change: event => this.onChange(event),
+                focus: event => this.onFocus(event),
+                blur: event => this.onBlur(event)
             };
         }
     },
@@ -171,6 +175,14 @@ export default {
         onChange(event) {
             this.foundation.handleChange();
             this.$emit('change', event.target.value);
+        },
+        onFocus(event) {
+            this.focused = true;
+            this.$emit('focus', event);
+        },
+        onBlur(event) {
+            this.focused = false;
+            this.$emit('blur', event);
         }
     }
 };
