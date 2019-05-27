@@ -162,15 +162,13 @@ export default {
     methods: {
         refreshIndex() {
             const options = [...this.$refs.native_control.querySelectorAll('option')];
-
-            const idx = options.findIndex(({ value }) => {
-                return this.value === value;
-            });
+            const idx = options.findIndex(({ value }) => this.value === value);
 
             if (this.$refs.native_control.selectedIndex !== idx) {
                 this.$refs.native_control.selectedIndex = idx;
-                this.foundation.handleChange();
             }
+
+            this.foundation.handleChange();
         },
         onChange(event) {
             this.foundation.handleChange();
